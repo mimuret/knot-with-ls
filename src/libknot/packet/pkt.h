@@ -336,6 +336,14 @@ static inline bool knot_pkt_has_dnssec(const knot_pkt_t *pkt)
 }
 
 /*!
+ * \brief Checks if LS bit is set in the packet's OPT RR.
+ */
+static inline bool knot_pkt_has_lbsupport(const knot_pkt_t *pkt)
+{
+	return knot_pkt_has_edns(pkt) && knot_edns_ls(pkt->opt_rr);
+}
+
+/*!
  * \brief Checks if there is an NSID OPTION in the packet's OPT RR.
  */
 static inline bool knot_pkt_has_nsid(const knot_pkt_t *pkt)

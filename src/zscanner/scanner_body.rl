@@ -1321,6 +1321,7 @@
 	    | "EUI64"i      %{ type_num(KNOT_RRTYPE_EUI64, &rdata_tail); }
 	    | "URI"i        %{ type_num(KNOT_RRTYPE_URI, &rdata_tail); }
 	    | "CAA"i        %{ type_num(KNOT_RRTYPE_CAA, &rdata_tail); }
+	    | "LB"i         %{ type_num(KNOT_RRTYPE_LB, &rdata_tail); }
 	    | "TYPE"i      . num16 # TYPE0-TYPE65535.
 	    ) $!_type_error;
 	# END
@@ -1381,6 +1382,7 @@
 	    | "EUI64"i      %{ window_add_bit(KNOT_RRTYPE_EUI64, s); }
 	    | "URI"i        %{ window_add_bit(KNOT_RRTYPE_URI, s); }
 	    | "CAA"i        %{ window_add_bit(KNOT_RRTYPE_CAA, s); }
+	    | "LB"i        %{ window_add_bit(KNOT_RRTYPE_LB, s); }
 	    | "TYPE"i      . type_bitmap # TYPE0-TYPE65535.
 	    );
 
@@ -1829,6 +1831,10 @@
 		(num8 . sep . text_string . sep . text)
 		$!_r_data_error %_ret . all_wchar;
 
+	r_data_lb :=
+		(num16 . sep . text_string . sep . r_dname)
+		$!_r_data_error %_ret . all_wchar;
+
 	action _text_r_data {
 		fhold;
 		switch (s->r_type) {
@@ -1903,6 +1909,8 @@
 			fcall r_data_uri;
 		case KNOT_RRTYPE_CAA:
 			fcall r_data_caa;
+		case KNOT_RRTYPE_LB:
+			fcall r_data_lb;
 		default:
 			WARN(ZS_CANNOT_TEXT_DATA);
 			fgoto err_line;
@@ -1952,6 +1960,7 @@
 		case KNOT_RRTYPE_EUI64:
 		case KNOT_RRTYPE_URI:
 		case KNOT_RRTYPE_CAA:
+		case KNOT_RRTYPE_LB:
 			fcall nonempty_hex_r_data;
 		// Next types can have empty rdata.
 		case KNOT_RRTYPE_APL:
@@ -2030,6 +2039,7 @@
 		| "EUI64"i      %{ s->r_type = KNOT_RRTYPE_EUI64; }
 		| "URI"i        %{ s->r_type = KNOT_RRTYPE_URI; }
 		| "CAA"i        %{ s->r_type = KNOT_RRTYPE_CAA; }
+		| "LB"i         %{ s->r_type = KNOT_RRTYPE_LB; }
 		| "TYPE"i      . type_number
 		) $!_r_type_error;
 	# END

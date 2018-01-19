@@ -34,6 +34,9 @@ enum knot_edns_private_consts {
 	/*! \brief Bit mask for DO bit. */
 	EDNS_DO_MASK = (uint32_t)(1 << 15),
 
+	/*! \brief Bit mask for LS bit. */
+	EDNS_LS_MASK = (uint32_t)(1 << 14),
+
 	/*! \brief Byte offset of the extended RCODE field in TTL. */
 	EDNS_OFFSET_RCODE   = 0,
 	/*! \brief Byte offset of the version field in TTL. */
@@ -175,6 +178,26 @@ void knot_edns_set_do(knot_rrset_t *opt_rr)
 	uint32_t ttl = knot_rrset_ttl(opt_rr);
 	// Set the DO bit
 	ttl |= EDNS_DO_MASK;
+	// Store the TTL to the RDATA
+	knot_rdata_set_ttl(knot_rdataset_at(&opt_rr->rrs, 0), ttl);
+}
+
+_public_
+bool knot_edns_ls(const knot_rrset_t *opt_rr)
+{
+	assert(opt_rr != NULL);
+	return knot_rrset_ttl(opt_rr) & EDNS_LS_MASK;
+}
+
+_public_
+void knot_edns_set_ls(knot_rrset_t *opt_rr)
+{
+	assert(opt_rr != NULL);
+
+	// Read the TTL
+	uint32_t ttl = knot_rrset_ttl(opt_rr);
+	// Set the DO bit
+	ttl |= EDNS_LS_MASK;
 	// Store the TTL to the RDATA
 	knot_rdata_set_ttl(knot_rdataset_at(&opt_rr->rrs, 0), ttl);
 }

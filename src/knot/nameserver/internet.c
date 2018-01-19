@@ -162,6 +162,17 @@ static int put_answer(knot_pkt_t *pkt, uint16_t type, knotd_qdata_t *qdata)
 		}
 		break;
 	}
+	case KNOT_RRTYPE_A:
+	case KNOT_RRTYPE_AAAA:
+		if(knot_pkt_has_lbsupport(qdata->query)) {
+			rrset = node_rrset(qdata->extra->node, KNOT_RRTYPE_LB);
+			if (!knot_rrset_empty(&rrset)) {
+				knot_rrset_t rrsigs = node_rrset(qdata->extra->node, KNOT_RRTYPE_RRSIG);
+				ret = process_query_put_rr(pkt, qdata, &rrset, &rrsigs,
+																	compr_hint, put_rr_flags);
+				break;
+			}
+		}
 	default: /* Single RRSet of given type. */
 		rrset = node_rrset(qdata->extra->node, type);
 		if (!knot_rrset_empty(&rrset)) {

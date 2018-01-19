@@ -228,6 +228,31 @@ bool knot_edns_do(const knot_rrset_t *opt_rr);
 void knot_edns_set_do(knot_rrset_t *opt_rr);
 
 /*!
+ * \brief Returns the state of the LS bit in the OPT RR flags.
+ *
+ * \warning This function does not check the parameter, so ensure to check it
+ *          before calling the function. It must not be NULL.
+ * \note There is an assert() for debug checking of the parameter.
+ *
+ * \param opt_rr  OPT RR to get the LS bit from.
+ *
+ * \return true if the LS bit is set.
+ * \return false if the LS bit is not set.
+ */
+bool knot_edns_ls(const knot_rrset_t *opt_rr);
+
+/*!
+ * \brief Sets the LS bit in the OPT RR.
+ *
+ * \warning This function does not check the parameter, so ensure to check it
+ *          before calling the function. It must not be NULL.
+ * \note There is an assert() for debug checking of the parameter.
+ *
+ * \param opt_rr  OPT RR to set the LS bit in.
+ */
+void knot_edns_set_ls(knot_rrset_t *opt_rr);
+
+/*!
  * \brief Removes all EDNS options with given \a code.
  *
  * \param[in] opt_rr  OPT RR structure to remove the options from.
