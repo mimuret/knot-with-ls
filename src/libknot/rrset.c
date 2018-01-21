@@ -243,6 +243,9 @@ int knot_rrset_rr_to_canonical(knot_rrset_t *rrset)
 
 			pos += ret;
 			break;
+		case KNOT_RDATA_WF_LB_LOCATION:
+			pos = *pos + 1;
+			break;
 		case KNOT_RDATA_WF_REMAINDER:
 			break;
 		default:

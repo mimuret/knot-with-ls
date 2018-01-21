@@ -143,6 +143,7 @@ nobase_libknot_la_HEADERS =			\
 	libknot/rrtype/soa.h			\
 	libknot/rrtype/tsig.h			\
 	libknot/rrtype/txt.h			\
+	libknot/rrtype/lb.h			\
 	libknot/tsig-op.h			\
 	libknot/tsig.h				\
 	libknot/yparser/yparser.h		\

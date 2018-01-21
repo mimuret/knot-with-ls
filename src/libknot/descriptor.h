@@ -154,6 +154,8 @@ enum knot_rdata_wireformat {
 	KNOT_RDATA_WF_NAPTR_HEADER,
 	/*!< Final part of a record. */
 	KNOT_RDATA_WF_REMAINDER,
+	/*!< LB Location. */
+	KNOT_RDATA_WF_LB_LOCATION,
 	/*!< The last descriptor in array. */
 	KNOT_RDATA_WF_END                  =   0
 };

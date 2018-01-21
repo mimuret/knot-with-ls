@@ -996,7 +996,6 @@ prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
 run_dir = @run_dir@
-runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -1106,6 +1105,7 @@ nobase_libknot_la_HEADERS = \
 	libknot/rrtype/soa.h			\
 	libknot/rrtype/tsig.h			\
 	libknot/rrtype/txt.h			\
+	libknot/rrtype/lb.h			\
 	libknot/tsig-op.h			\
 	libknot/tsig.h				\
 	libknot/yparser/yparser.h		\

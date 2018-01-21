@@ -184,6 +184,8 @@ static int write_rdata_block(const uint8_t **src, size_t *src_avail,
 		return write_rdata_naptr_header(src, src_avail, dst, dst_avail);
 	case KNOT_RDATA_WF_REMAINDER:
 		return write_rdata_fixed(src, src_avail, dst, dst_avail, *src_avail);
+	case KNOT_RDATA_WF_LB_LOCATION:
+		return write_rdata_fixed(src, src_avail, dst, dst_avail, **src + 1);
 	default:
 		/* Fixed size block */
 		assert(type > 0);
@@ -246,6 +248,11 @@ static int rdata_len_block(const uint8_t **src, size_t *src_avail,
 			return ret;
 		}
 
+		*src += ret;
+		*src_avail -= ret;
+		break;
+	case KNOT_RDATA_WF_LB_LOCATION:
+		ret = **src + 1;
 		*src += ret;
 		*src_avail -= ret;
 		break;

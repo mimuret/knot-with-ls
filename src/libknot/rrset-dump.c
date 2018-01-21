@@ -1711,6 +1711,15 @@ static int dump_caa(DUMP_PARAMS)
 	DUMP_END;
 }
 
+static int dump_lb(DUMP_PARAMS)
+{
+	DUMP_NUM16;      DUMP_SPACE;
+	DUMP_UNQUOTED;  DUMP_SPACE;
+	DUMP_DNAME; DUMP_SPACE;
+
+	DUMP_END;
+}
+
 static int dump_unknown(DUMP_PARAMS)
 {
 	if (p->style->wrap) {
@@ -1799,6 +1808,8 @@ static int txt_dump_data(rrset_dump_params_t *p, uint16_t type)
 			return dump_uri(p);
 		case KNOT_RRTYPE_CAA:
 			return dump_caa(p);
+		case KNOT_RRTYPE_LB:
+			return dump_lb(p);
 		default:
 			return dump_unknown(p);
 	}

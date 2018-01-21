@@ -138,7 +138,9 @@ static const knot_rdata_descriptor_t rdata_descriptors[] = {
 	                               KNOT_RDATA_WF_END }, "URI" },
 	[KNOT_RRTYPE_CAA]        = { { KNOT_RDATA_WF_REMAINDER,
 	                               KNOT_RDATA_WF_END }, "CAA" },
-	[KNOT_RRTYPE_LB]         = { { KNOT_RDATA_WF_REMAINDER,
+	[KNOT_RRTYPE_LB]         = { { 2,
+																 KNOT_RDATA_WF_LB_LOCATION,
+																 KNOT_RDATA_WF_DECOMPRESSIBLE_DNAME,
 	                               KNOT_RDATA_WF_END }, "LB" },
 };
 
